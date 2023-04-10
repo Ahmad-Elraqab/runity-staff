@@ -6,7 +6,7 @@ class SigninStaffUseCase {
 
   SigninStaffUseCase({required this.repository});
 
-  Future<(StaffEntity, String)> execute(
+  Future<Map<String, dynamic>> execute(
       {String? email, String? password}) async {
     return repository.signin(data: {
       'data': {'email': email, 'password': password, 'fcmToken': ''}

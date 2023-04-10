@@ -17,19 +17,19 @@ class EventViewModel extends ChangeNotifier {
   List<EventEntity>? pastEvents;
   List<EventEntity>? upcomingEvents;
 
-  Future<(List<EventEntity>, List<EventEntity>)> getAllEvents() async {
+  Future<Map<String, dynamic>> getAllEvents() async {
+    // Future<(List<EventEntity>, List<EventEntity>)> getAllEvents() async {
     try {
       eventWidgetViewModel.isLoading = true;
       // ignore: no_leading_underscores_for_local_identifiers
-      final (_pastEvents, _upcomingEvents) =
-          await getAllEventsUseCase.execute();
+      final data = await getAllEventsUseCase.execute();
 
-      pastEvents = _pastEvents;
-      upcomingEvents = _upcomingEvents;
+      pastEvents = data['past'];
+      upcomingEvents = data['upcoming'];
 
       eventWidgetViewModel.isLoading = false;
 
-      return (pastEvents!, upcomingEvents!);
+      return {'past': pastEvents, 'upcoming': upcomingEvents};
     } catch (e) {
       eventWidgetViewModel.isLoading = false;
       ErrorAction.excute(e as RestException);

@@ -35,24 +35,24 @@ class QRCodeViewModel extends ChangeNotifier {
     QRResponseEntity? data;
     bool? isSuccess;
 
-    (data, isSuccess) = await checkInQRCodeUseCase.execute(
+    final info = await checkInQRCodeUseCase.execute(
       eventId: eventId,
       participantUniqueKey: qrCodeWidgetViewModel.barcode.code,
     );
 
-    navigate(context!, data, QRResponseType.CheckIn, isSuccess);
+    navigate(context!, info['data'], QRResponseType.CheckIn, info['check']);
   }
 
   Future<void> collectItemsQRCode(BuildContext? context) async {
     QRResponseEntity? data;
     bool? isSuccess;
 
-    (data, isSuccess) = await collectItemQRCodeUseCase.execute(
+    final info = await collectItemQRCodeUseCase.execute(
       participantUniqueKey: qrCodeWidgetViewModel.barcode.code,
       eventId: eventId,
     );
 
-    navigate(context!, data, QRResponseType.Collection, isSuccess);
+    navigate(context!, info['data'], QRResponseType.Collection, info['check']);
   }
 
   void navigate(BuildContext context, QRResponseEntity res, QRResponseType type,

@@ -14,7 +14,7 @@ class QRCodeRepositoryImpl implements QRCodeRepository {
   QRCodeRepositoryImpl({required this.restService});
 
   @override
-  Future<(QRResponseEntity, bool)> checkInConsumer(
+  Future<Map<String, dynamic>> checkInConsumer(
       {String? eventId, String? participantUniqueKey}) async {
     try {
       final response = await restService.dio.post(
@@ -30,12 +30,12 @@ class QRCodeRepositoryImpl implements QRCodeRepository {
 
       final data =
           QRResponseModel.fromJson(json.decode(response.data)['response']);
-      return (data.toEntity(), true);
+      return {'data': data.toEntity(), 'check': true};
     } catch (e) {
       try {
         final data = QRResponseModel.fromJson(
             json.decode((e as RestException).response!.data)['response']);
-        return (data.toEntity(), false);
+        return {'data': data.toEntity(), 'check': false};
       } catch (e) {
         ErrorUIAction.excute('invalid QR Code!');
         rethrow;
@@ -44,7 +44,7 @@ class QRCodeRepositoryImpl implements QRCodeRepository {
   }
 
   @override
-  Future<(QRResponseEntity, bool)> collectItem(
+  Future<Map<String, dynamic>> collectItem(
       {String? eventId, String? participantUniqueKey}) async {
     try {
       final response = await restService.dio.post(
@@ -60,12 +60,12 @@ class QRCodeRepositoryImpl implements QRCodeRepository {
 
       final data =
           QRResponseModel.fromJson(json.decode(response.data)['response']);
-      return (data.toEntity(), true);
+      return {'data': data.toEntity(), 'check': true};
     } catch (e) {
       try {
         final data = QRResponseModel.fromJson(
             json.decode((e as RestException).response!.data)['response']);
-        return (data.toEntity(), false);
+        return {'data': data.toEntity(), 'check': false};
       } catch (e) {
         ErrorUIAction.excute('invalid QR Code!');
         rethrow;

@@ -1,5 +1,5 @@
 import 'package:event_app/domain/entities/event_detail_entity/event_detail_entity.dart';
-import 'package:event_app/domain/entities/event_entity/event_entity.dart';
+// import 'package:event_app/domain/entities/event_entity/event_entity.dart';
 import 'package:event_app/domain/entities/event_summary_entity/event_summary_entity.dart';
 import 'package:event_app/domain/repositories/event_repository.dart';
 
@@ -8,7 +8,7 @@ class GetAllEventsUseCase {
 
   GetAllEventsUseCase({required this.repository});
 
-  Future<(List<EventEntity>, List<EventEntity>)> execute() async {
+  Future<Map<String, dynamic>> execute() async {
     try {
       return repository.getAllEntities();
     } catch (e) {

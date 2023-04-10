@@ -1,8 +1,8 @@
-import 'package:event_app/domain/entities/qr_response_entity/qr_response_entity.dart';
+// import 'package:event_app/domain/entities/qr_response_entity/qr_response_entity.dart';
 
 abstract class QRCodeRepository {
-  Future<(QRResponseEntity, bool)> checkInConsumer(
+  Future<Map<String, dynamic>> checkInConsumer(
       {String? eventId, String? participantUniqueKey});
-  Future<(QRResponseEntity, bool)> collectItem(
+  Future<Map<String, dynamic>> collectItem(
       {String? eventId, String? participantUniqueKey});
 }

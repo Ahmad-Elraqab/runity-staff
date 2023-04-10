@@ -13,7 +13,7 @@ class StaffRepositoryImpl implements StaffRepository {
   });
 
   @override
-  Future<(StaffEntity, String)> signin({Map<String, dynamic>? data}) async {
+  Future<Map<String, dynamic>> signin({Map<String, dynamic>? data}) async {
     try {
       final response =
           await restService.dio.post('Staff/user/login', data: data);
@@ -23,7 +23,7 @@ class StaffRepositoryImpl implements StaffRepository {
 
       final staffEntity = staffModel.toEntity();
       final token = jsonDecode(response.data)['response']['authToken'];
-      return (staffEntity, token.toString());
+      return {'data': staffEntity, 'token': token.toString()};
     } catch (e) {
       rethrow;
     }

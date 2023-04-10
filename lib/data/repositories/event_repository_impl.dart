@@ -19,7 +19,8 @@ class EventRepositoryImpl implements EventRepository {
   EventRepositoryImpl({required this.restService});
 
   @override
-  Future<(List<EventEntity>, List<EventEntity>)> getAllEntities() async {
+  Future<Map<String, dynamic>> getAllEntities() async {
+    // Future<(List<EventEntity>, List<EventEntity>)> getAllEntities() async {
     try {
       final response = await restService.dio.post(
         'Staff/event/list',
@@ -44,7 +45,7 @@ class EventRepositoryImpl implements EventRepository {
       final List<EventEntity> upcomingEventEntity =
           upcomingEventModels.map((e) => e.toEntity()).toList();
 
-      return (pastEventEntity, upcomingEventEntity);
+      return {'past': pastEventEntity, 'upcoming': upcomingEventEntity};
     } catch (e) {
       rethrow;
     }

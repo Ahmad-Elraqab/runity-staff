@@ -22,9 +22,10 @@ class LoginViewModel extends ChangeNotifier {
 
   StaffEntity? staff;
 
-  Future<(StaffEntity, String)> login() async {
+  Future<Map<String, dynamic>> login() async {
     try {
       var _staff, _token;
+      var info;
       if (loginWidgetViewModel.emailController.text.isEmpty ||
           loginWidgetViewModel.passwordController.text.isEmpty) {
         ErrorUIAction.excute('Fill in fields..!');
@@ -32,21 +33,21 @@ class LoginViewModel extends ChangeNotifier {
         loginWidgetViewModel.isLoading = true;
 
         // ignore: no_leading_underscores_for_local_identifiers
-        (_staff, _token) = await signinStaffUseCase.execute(
+        info = await signinStaffUseCase.execute(
           email: loginWidgetViewModel.emailController.text,
           password: loginWidgetViewModel.passwordController.text,
         );
-        staff = _staff;
+        staff = info['data'];
 
         await saveTokenUseCase.execute(
-          token: _token,
+          token: info['token'],
         );
         appViewModel.authenticated = true;
 
         loginWidgetViewModel.isLoading = false;
         await loginWidgetViewModel.navigate();
       }
-      return (staff!, _token.toString());
+      return {'data': info['data'], 'token': info['token'].toString()};
     } catch (e) {
       loginWidgetViewModel.isLoading = false;
       ErrorAction.excute(e as RestException);

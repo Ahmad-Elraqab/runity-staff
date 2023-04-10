@@ -6,7 +6,7 @@ class CheckInQRCodeUseCase {
 
   CheckInQRCodeUseCase({required this.repository});
 
-  Future<(QRResponseEntity, bool)> execute(
+  Future<Map<String, dynamic>> execute(
       {String? eventId, String? participantUniqueKey}) async {
     final data = await repository.checkInConsumer(
       eventId: eventId,
@@ -21,7 +21,7 @@ class CollectItemQRCodeUseCase {
 
   CollectItemQRCodeUseCase({required this.repository});
 
-  Future<(QRResponseEntity, bool)> execute(
+  Future<Map<String, dynamic>> execute(
       {String? eventId, String? participantUniqueKey}) async {
     final data = await repository.collectItem(
       participantUniqueKey: participantUniqueKey,
